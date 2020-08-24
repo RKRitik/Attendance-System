@@ -9,7 +9,7 @@ Block::Block(long theTimestamp, string thePreviousHash) //Attendance theAttendan
     hash = calculateHash();
 }
 
-string Block::printHash()
+string Block::getHash()
 {
 
     return hash;
@@ -18,6 +18,16 @@ string Block::printHash()
 string Block::calculateHash()
 {
     return sha256(to_string(timestamp) + previousHash + to_string(timestamp) + to_string(nonce)); // + theAttendance.stringify()
+}
+
+void Block::setPreviousHash(string hash)
+{
+    previousHash = hash;
+}
+
+void Block::updateHash(string nHash)
+{
+    hash = nHash;
 }
 
 // string stringify(Transactions transactions[])

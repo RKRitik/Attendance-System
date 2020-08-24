@@ -23,8 +23,11 @@ class Block
 public:
     Block(long timestamp, string previousHash = " "); //Attendance attendance,
 
-    string printHash();
+    string getHash();
 
+    void setPreviousHash(string hash);
+
+    void updateHash(string nHash);
     /**
    * Returns the SHA256 of this block (by processing all the data stored
    * inside this block)
