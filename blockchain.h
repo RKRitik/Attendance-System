@@ -9,21 +9,39 @@
 using namespace std;
 class Blockchain
 {
-    /**
-   * @param {blocks[]} chain
-   *
-   */
-
     vector<Block> chain;
 
 public:
+    /**
+   * default constructor
+   *
+   *
+   */
+
     Blockchain();
 
-    Block createGenesisBlock();
-    string printChain();
+    /**
+   * return the first block 
+   *
+   * @returns {Block}
+   */
 
+    Block createGenesisBlock();
+
+    void printChain();
+
+    /**
+   * return the block at the  end of chain
+   *
+   * @returns {Block}
+   */
     Block getLatestBlock();
 
+    /**
+   * adds a block to the end of chain
+   *
+   * @returns {void}
+   */
     void addBlock(Block b);
 
     /**
@@ -33,6 +51,15 @@ public:
    * @returns {string}
    */
     string calculateHash();
+
+    /**
+   * Loops over all the blocks in the chain and verify if they are properly
+   * linked together and nobody has tampered with the hashes. By checking
+   * the blocks it also verifies the (signed) transactions inside of them.
+   *
+   * @returns {boolean}
+   */
+    bool isChainValid();
 
     /**
    * Starts the mining process on the block. It changes the 'nonce' until the hash

@@ -4,24 +4,29 @@
 #include <iostream>
 #include <string>
 
-using namespace std;
-
 Blockchain::Blockchain()
 {
-    chain[0] = createGenesisBlock();
+    chain.push_back(createGenesisBlock());
 }
 
 Block Blockchain::createGenesisBlock()
 {
-    // Block b1(12344444,"25/Aug/2020");
+    return Block(12344444); //, " ", "25/Aug/2020"
 }
-
-//string printChain();
 
 Block Blockchain::getLatestBlock()
 {
 
     return chain[chain.size() - 1];
+}
+
+void Blockchain::printChain()
+{
+
+    for (int i = 0; i < chain.size(); i++)
+    {
+        cout << chain[i].getHash() << "\n";
+    }
 }
 
 void Blockchain::addBlock(Block b)
@@ -32,12 +37,6 @@ void Blockchain::addBlock(Block b)
     chain.push_back(b);
 }
 
-/**
-   * Returns the SHA256 of this block (by processing all the data stored
-   * inside this block)
-   *
-   * @returns {string}
-   */
 string calculateHash();
 
 /**
@@ -57,3 +56,35 @@ string calculateHash();
    * @returns {boolean}
    */
 // bool hasValidTransactions();
+
+bool Blockchain::isChainValid()
+{
+    // Check if the Genesis block hasn't been tampered with by comparing
+    // the output of createGenesisBlock with the first block on our chain
+    Block realGenesis = createGenesisBlock();
+    Block thisChainGenesis = chain.at(0);
+    if (realGenesis == thisChainGenesis)
+    {
+        return false;
+    }
+
+    // Check the remaining blocks on the chain to see if there hashes and
+    // signatures are correct
+    for (int i = 1; i < chain.size(); i++)
+    {
+        Block currentBlock = chain[i];
+
+        if (!currentBlock.hasValidTransactions())
+        {
+            return false;
+        }
+
+        if (currentBlock.hash != = currentBlock.calculateHash())
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+}
