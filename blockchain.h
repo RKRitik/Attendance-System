@@ -9,9 +9,10 @@
 using namespace std;
 class Blockchain
 {
-    vector<Block> chain;
-
 public:
+    vector<Block> chain;
+    int difficulty = 5;
+    // public:
     /**
    * default constructor
    *

@@ -4,6 +4,7 @@
 #include "sha/sha256.h"
 #include <iostream>
 #include <string>
+#include <vector>
 
 using namespace std;
 class Block
@@ -15,19 +16,22 @@ class Block
    */
 
     long timestamp;
-    // Attendance Attendance;
+    vector<string> Attendance;
     string previousHash;
     int nonce;
     string hash;
 
 public:
-    Block(long timestamp, string previousHash = " "); //Attendance attendance,
+    Block(long timestamp, vector<string> attendance = {" "}, string previousHash = " "); //Attendance attendance,
 
     string getHash();
 
     void setPreviousHash(string hash);
 
+    string getPreviousHash();
+
     void updateHash(string nHash);
+
     /**
    * Returns the SHA256 of this block (by processing all the data stored
    * inside this block)
@@ -36,15 +40,16 @@ public:
    */
     string calculateHash();
 
+    string stringifyAttendance();
+
     /**
    * Starts the mining process on the block. It changes the 'nonce' until the hash
    * of the block starts with enough zeros (= difficulty)
    *    needs to be parallized
    * @param {number} difficulty
    */
-    // string stringify(Attendance attendance);
 
-    // void mineBlock(int difficulty);
+    void mineBlock(int difficulty);
 
     /**
    * Validates all the transactions inside this block (signature + hash) and

@@ -26,6 +26,7 @@ void Blockchain::printChain()
     for (int i = 0; i < chain.size(); i++)
     {
         cout << chain[i].getHash() << "\n";
+        cout << chain[i].getPreviousHash() << "\n ***************\n";
     }
 }
 
@@ -33,7 +34,7 @@ void Blockchain::addBlock(Block b)
 
 {
     b.setPreviousHash(getLatestBlock().getHash());
-    b.updateHash(b.getHash());
+    b.mineBlock(difficulty);
     chain.push_back(b);
 }
 
@@ -63,7 +64,7 @@ bool Blockchain::isChainValid()
     // the output of createGenesisBlock with the first block on our chain
     Block realGenesis = createGenesisBlock();
     Block thisChainGenesis = chain.at(0);
-    if (realGenesis == thisChainGenesis)
+    if (realGenesis.getHash() != thisChainGenesis.getHash())
     {
         return false;
     }
@@ -72,19 +73,23 @@ bool Blockchain::isChainValid()
     // signatures are correct
     for (int i = 1; i < chain.size(); i++)
     {
-        Block currentBlock = chain[i];
-
-        if (!currentBlock.hasValidTransactions())
+        Block currentBlock = chain.at(i);
+        Block previousBlock = chain.at(i - 1);
+        if (currentBlock.getPreviousHash() != previousBlock.getHash())
         {
+            cout << "\ncurrentBlock.getPreviousHash() = " << currentBlock.getPreviousHash();
+            cout << " \npreviousBlock.getHash() = " << previousBlock.getHash() << endl;
+
             return false;
         }
 
-        if (currentBlock.hash != = currentBlock.calculateHash())
+        if (currentBlock.getHash() != currentBlock.calculateHash())
         {
+            cout << "\ncurrentBlock.getHash() = " << currentBlock.getHash();
+            cout << "\ncurrentBlock.calculateHash() = " << currentBlock.calculateHash() << endl;
             return false;
         }
     }
 
     return true;
-}
 }
