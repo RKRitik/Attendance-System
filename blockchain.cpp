@@ -1,8 +1,12 @@
 #include "blockchain.h"
 #include "block.h"
+#include <conio.h>
 #include "sha/sha256.h"
 #include <iostream>
 #include <string>
+#include <algorithm>
+
+using namespace std;
 
 Blockchain::Blockchain()
 {
@@ -22,18 +26,44 @@ Block Blockchain::getLatestBlock()
 
 void Blockchain::printChain()
 {
-
+    system("CLS");
+    int f;
+    cout << "Printing chain...";
     for (int i = 0; i < chain.size(); i++)
     {
         cout << chain[i].getHash() << "\n";
         cout << chain[i].getPreviousHash() << "\n ***************\n";
     }
+
+    getch();
+}
+
+void Blockchain::printAttendance()
+{
+    string regNum;
+    cout << "\nEnter the registration number of student : ";
+    cin >> regNum;
+    int attendanceCount = 0;
+    int len = chain.size();
+    for (int i = 1; i < len; i++)
+    {
+        Block b = chain.at(i);
+        vector<string> attendance = b.getAttendance();
+        vector<string>::iterator it = find(attendance.begin(), attendance.end(), regNum);
+        if (it != attendance.end())
+        {
+            attendanceCount++;
+        }
+    }
+    cout << "The attendance is " << attendanceCount << " /" << len - 1;
+    getch();
 }
 
 void Blockchain::addBlock(Block b)
 
 {
     b.setPreviousHash(getLatestBlock().getHash());
+    //b.mineBlockParallel(difficulty);
     b.mineBlock(difficulty);
     chain.push_back(b);
 }

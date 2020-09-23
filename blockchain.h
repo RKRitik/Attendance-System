@@ -11,7 +11,7 @@ class Blockchain
 {
 public:
     vector<Block> chain;
-    int difficulty = 5;
+    int difficulty = 2;
     // public:
     /**
    * default constructor
@@ -62,12 +62,9 @@ public:
    */
     bool isChainValid();
 
-    /**
-   * Starts the mining process on the block. It changes the 'nonce' until the hash
-   * of the block starts with enough zeros (= difficulty)
-   *    needs to be parallized
-   * @param {number} difficulty
-   */
+    void printAttendance();
+
+    /* @param{number} difficulty * /
     // string stringify(Attendance attendance);
 
     // void mineBlock(int difficulty);

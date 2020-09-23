@@ -18,13 +18,16 @@ class Block
     long timestamp;
     vector<string> Attendance;
     string previousHash;
-    int nonce;
+    string attendanceString;
+    unsigned int nonce;
     string hash;
 
 public:
     Block(long timestamp, vector<string> attendance = {" "}, string previousHash = " "); //Attendance attendance,
 
     string getHash();
+
+    vector<string> getAttendance();
 
     void setPreviousHash(string hash);
 
@@ -39,6 +42,7 @@ public:
    * @returns {string}
    */
     string calculateHash();
+    string calculateHash(int nonce);
 
     string stringifyAttendance();
 
@@ -50,6 +54,8 @@ public:
    */
 
     void mineBlock(int difficulty);
+
+    void mineBlockParallel(int difficulty);
 
     /**
    * Validates all the transactions inside this block (signature + hash) and
